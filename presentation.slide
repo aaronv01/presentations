@@ -1,0 +1,214 @@
+Concurrency in Go
+14 Aug 2015
+
+Aaron Vega
+avega@arkusnexus.com
+
+* Introduction
+
+* Concurrency in Go
+
+Only mostly ripped off from a couple of Rob Pike's [[https://vimeo.com/49718712][lectures]].
+
+* What is Go?
+
+Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.
+
+* Go features
+
+Not exactly Object Oriented:
+
+- No classes
+- No inheritance
+- Structural typing for interfaces
+- (methods on any type, even other methods)
+
+Simplicity.
+
+* Go is about gophers
+
+.image gophers.png
+
+- Goroutines
+- All about concurrency
+
+* Concurrency
+
+* Concurrency is not parallelism.
+Concurrency
+
+- Programming as the composition of independently executing processes.
+
+Parallelism
+
+- Programming as the simultaneous execution of (possibly related) computations.
+
+* Concurrency is not parallelism.
+
+Concurrency is about dealing with lots of things at once.
+
+Parallelism is about doing lots of things at once.
+
+Not the same, but related.
+
+Concurrency is about structure, parallelism is about execution.
+
+Concurrency provides a way to structure a solution to solve a problem that may (but not necessarily) be parallelizable.
+
+* Concurrency is not parallelism.
+
+.image gophersimple1.jpg
+
+Too much work for just one process.
+
+* Concurrency is not parallelism.
+
+.image gophercomplex1.jpg
+
+Concurrent design, but not necessarily parallel.
+
+* Concurrency is not parallelism.
+
+.image gophercomplex2.jpg
+
+Concurrency enables parallelism, but is not the same thing.
+
+* Concurrency in Go
+
+* Concurrency in Go
+
+- Goroutines
+
+- Channels
+
+* Goroutines
+
+.play boring1.go
+
+* Goroutines
+
+.play boring2.go /^func main/,/^}/
+
+Go statement runs the function, but the caller doesn't wait for a response.
+
+* Goroutines
+
+.play boring3.go /^func main/,/^}/
+
+* Goroutines
+
+An independent executing function.
+
+Has its own stack, self-managed and self-collected.
+
+Totally cheap.
+
+Not quite a thread.
+
+A program might have only one thread with thousands of goroutines.
+
+It doesn't hurt to think of it as a cheap mini-thread.
+
+* Channels
+
+A channel in Go provides communication between two (or more) goroutines.
+
+.code channels.go /show declaring/,/end show declaring/
+.code channels.go /show sending/,/end show sending/
+.code channels.go /show receiving/,/end show receiving/
+
+* Using channels
+
+.play boring4.go /^func main/,/^}/
+.code boring4.go /^func boring/,/^}/
+
+* Select statement
+Communication switch
+- All channels are evaluated.
+- Selection blocks until one communication can proceed.
+- If a default clause is present, it executes immediately if no channel is ready.
+- If multiple channels are ready, select chooses one randomly.
+
+.code select.go
+
+* Fake search engine
+
+* Fake Search
+
+.code google.go /show fakeSearch/,/end show fakeSearch/
+
+.code google.go /show servers/,/end show servers/
+
+* Fake Search
+
+.code google.go /^func main/,/^}/
+
+* Fake Search 1.0
+The function just queries the "engine" sequentially.
+
+.play google.go /^func SendQuery/,/^}/
+
+* Fake Search 2.0
+Run all queries concurrently.
+
+No locks. No condition variables. No callbacks.
+
+.play google2.go /^func SendQuery/,/^}/
+
+* Fake Search 2.1: Timeout
+
+.play google21.go /show timeout/,/end show timeout/
+
+* Fake Search: Replicas
+
+.code google3.go /show servers/,/end show servers/
+
+.code google3.go /^func QueryReplicas/,/^}/
+
+* Fake Search 3.0
+
+.play google3.go /show timeout/,/end show timeout/
+
+* Reminders Engine
+
+.image reminders.png 550 750
+
+* Reminders Engine
+
+.code reminders.go /show signature/,/end show signature/
+
+.code reminders.go /show parser/,/end show parser/
+
+* Reminders Engine
+
+.code reminders.go /show reminder/,/end show reminder/
+
+* Reminders Engine
+
+.code reminders.go /show main/,/end show main/
+
+* Don't over do it
+
+* Who uses Go?
+
+*Youtube*: [[https://github.com/youtube/vitess][https://github.com/youtube/vitess]]
+
+*Facebook*: [[https://github.com/facebookgo/][github]], [[http://blog.parse.com/learn/how-we-moved-our-api-from-ruby-to-go-and-saved-our-sanity/][How We Moved Our API From Ruby to Go and Saved Our Sanity]]
+
+*GitHub*: [[http://techno-weenie.net/2013/11/2/key-value-logs-in-go/][http://techno-weenie.net/2013/11/2/key-value-logs-in-go/]]
+
+*Docker*: [[http://www.slideshare.net/jpetazzo/docker-and-go-why-did-we-decide-to-write-docker-in-go][Why did we decide to write Docker in Go]]
+
+*Uber*: [[https://twitter.com/andygrunwald/status/624166365793001472][tweet]], [[https://github.com/uber/go-torch][source]]
+
+*Dropbox*: [[https://github.com/dropbox/godropbox][https://github.com/dropbox/godropbox]]
+
+*Heroku*: [[https://blog.golang.org/go-at-heroku][https://blog.golang.org/go-at-heroku]]
+
+*Soundcloud*: [[https://developers.soundcloud.com/blog/go-at-soundcloud][https://developers.soundcloud.com/blog/go-at-soundcloud]]
+
+*MongoDB*: [[http://blog.mongodb.org/post/51643994762/go-agent-go][http://blog.mongodb.org/post/51643994762/go-agent-go]]
+
+*iron.io*: [[http://www.iron.io/blog/2013/03/how-we-went-from-30-servers-to-2-go.html][How we went from 30 Servers to 2: Go]]
+
+[[https://github.com/golang/go/wiki/GoUsers][A lot more]]
