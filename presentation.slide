@@ -83,17 +83,17 @@ Concurrency enables parallelism, but is not the same thing.
 
 * Goroutines
 
-.play boring1.go
+.play boring1/boring1.go
 
 * Goroutines
 
-.play boring2.go /^func main/,/^}/
+.play boring2/boring2.go /^func main/,/^}/
 
 Go statement runs the function, but the caller doesn't wait for a response.
 
 * Goroutines
 
-.play boring3.go /^func main/,/^}/
+.play boring3/boring3.go /^func main/,/^}/
 
 * Goroutines
 
@@ -113,14 +113,14 @@ It doesn't hurt to think of it as a cheap mini-thread.
 
 A channel in Go provides communication between two (or more) goroutines.
 
-.code channels.go /show declaring/,/end show declaring/
-.code channels.go /show sending/,/end show sending/
-.code channels.go /show receiving/,/end show receiving/
+.code channels.txt /show declaring/,/end show declaring/
+.code channels.txt /show sending/,/end show sending/
+.code channels.txt /show receiving/,/end show receiving/
 
 * Using channels
 
-.play boring4.go /^func main/,/^}/
-.code boring4.go /^func boring/,/^}/
+.play boring4/boring4.go /^func main/,/^}/
+.code boring4/boring4.go /^func boring/,/^}/
 
 * Select statement
 Communication switch
@@ -129,45 +129,45 @@ Communication switch
 - If a default clause is present, it executes immediately if no channel is ready.
 - If multiple channels are ready, select chooses one randomly.
 
-.code select.go
+.code select.txt
 
 * Fake search engine
 
 * Fake Search
 
-.code google.go /show fakeSearch/,/end show fakeSearch/
+.code search/google.go /show fakeSearch/,/end show fakeSearch/
 
-.code google.go /show servers/,/end show servers/
+.code search/google.go /show servers/,/end show servers/
 
 * Fake Search
 
-.code google.go /^func main/,/^}/
+.code search/google.go /^func main/,/^}/
 
 * Fake Search 1.0
 The function just queries the "engine" sequentially.
 
-.play google.go /^func SendQuery/,/^}/
+.play search/google.go /^func SendQuery/,/^}/
 
 * Fake Search 2.0
 Run all queries concurrently.
 
 No locks. No condition variables. No callbacks.
 
-.play google2.go /^func SendQuery/,/^}/
+.play search2/google2.go /^func SendQuery/,/^}/
 
 * Fake Search 2.1: Timeout
 
-.play google21.go /show timeout/,/end show timeout/
+.play search21/google21.go /show timeout/,/end show timeout/
 
 * Fake Search: Replicas
 
-.code google3.go /show servers/,/end show servers/
+.code search3/google3.go /show servers/,/end show servers/
 
-.code google3.go /^func QueryReplicas/,/^}/
+.code search3/google3.go /^func QueryReplicas/,/^}/
 
 * Fake Search 3.0
 
-.play google3.go /show timeout/,/end show timeout/
+.play search3/google3.go /show timeout/,/end show timeout/
 
 * Reminders Engine
 
@@ -175,17 +175,17 @@ No locks. No condition variables. No callbacks.
 
 * Reminders Engine
 
-.code reminders.go /show signature/,/end show signature/
+.code reminders.txt /show signature/,/end show signature/
 
-.code reminders.go /show parser/,/end show parser/
-
-* Reminders Engine
-
-.code reminders.go /show reminder/,/end show reminder/
+.code reminders.txt /show parser/,/end show parser/
 
 * Reminders Engine
 
-.code reminders.go /show main/,/end show main/
+.code reminders.txt /show reminder/,/end show reminder/
+
+* Reminders Engine
+
+.code reminders.txt /show main/,/end show main/
 
 * Don't over do it
 
